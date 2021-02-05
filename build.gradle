@@ -72,11 +72,11 @@ if (project.hasProperty('bintray_user') && project.hasProperty('bintray_key')) {
         configurations = ['archives']
         pkg {
             repo = 'plast-lab'
-            name = 'clue-common'
-            desc = 'Common functionality for static analysis tools developed by the PLAST research group.'
+            name = 'mini-sarif'
+            desc = 'A Java library to serialize static analysis results in SARIF format.'
             licenses = ['MIT']
-            labels = ['groovy', 'java']
-            vcsUrl = 'https://bitbucket.org/yanniss/clue-common.git'
+            labels = ['java']
+            vcsUrl = 'https://github.com/plast-lab/mini-sarif'
             version {
                 name = project.version
                 released = new Date()
