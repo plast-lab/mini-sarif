@@ -1,0 +1,87 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.researchgate.release' version '2.6.0'
+    id "com.jfrog.bintray" version "1.8.4"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+group 'org.clyze'
+
+wrapper {
+    gradleVersion = "6.2"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://centauri.di.uoa.gr:8081/artifactory/plast-public" }
+    maven { url 'https://dl.bintray.com/gfour/plast-lab' }
+}
+
+dependencies {
+    api 'com.fasterxml.jackson.core:jackson-databind:2.12.1'   // JSON generator
+}
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+if (project.hasProperty('artifactory_user')) {
+    publishing {
+        repositories {
+            maven {
+                credentials {
+                    username artifactory_user
+                    password artifactory_password
+                }
+                //Always publish to the public releases repo
+                url "${artifactory_contextUrl}/libs-public-release-local"
+            }
+        }
+    }
+}
+
+release {
+    failOnSnapshotDependencies = false
+    git {
+        requireBranch = 'master'
+    }
+}
+afterReleaseBuild.dependsOn publish
+
+// Upload to bintray with:
+//   ./gradlew clean build bintrayUpload --info
+// Needs properties: bintray_user, bintray_key.
+if (project.hasProperty('bintray_user') && project.hasProperty('bintray_key')) {
+    bintray {
+        user = bintray_user
+        key = bintray_key
+        publications = ['mavenJava']
+        configurations = ['archives']
+        pkg {
+            repo = 'plast-lab'
+            name = 'clue-common'
+            desc = 'Common functionality for static analysis tools developed by the PLAST research group.'
+            licenses = ['MIT']
+            labels = ['groovy', 'java']
+            vcsUrl = 'https://bitbucket.org/yanniss/clue-common.git'
+            version {
+                name = project.version
+                released = new Date()
+                vcsTag = project.version
+            }
+        }
+    }
+}
