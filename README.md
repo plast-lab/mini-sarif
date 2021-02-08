@@ -6,3 +6,7 @@ offer support for displaying simple analysis results.
 
 Tested with GitHub ("codeql-action/upload-sarif" Action) and Visual
 Studio Code (with the SARIF viewer plugin).
+
+For examples on how to use this library, see
+[Doop](https://bitbucket.org/yanniss/doop) or
+[source-ir-fitter](https://github.com/plast-lab/source-ir-fitter/).
