@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * The main entry points of the library.
  */
-@SuppressWarnings("unused")
 public class SARIFWriter {
     /**
      * Write a SARIF object to a file.
