@@ -2,7 +2,6 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.researchgate.release' version '2.6.0'
-    id "com.jfrog.bintray" version "1.8.4"
 }
 
 sourceCompatibility = "1.8"
@@ -18,7 +17,6 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url "http://centauri.di.uoa.gr:8081/artifactory/plast-public" }
-    maven { url 'https://dl.bintray.com/gfour/plast-lab' }
 }
 
 dependencies {
@@ -67,28 +65,3 @@ release {
     }
 }
 afterReleaseBuild.dependsOn publish
-
-// Upload to bintray with:
-//   ./gradlew clean build bintrayUpload --info
-// Needs properties: bintray_user, bintray_key.
-if (project.hasProperty('bintray_user') && project.hasProperty('bintray_key')) {
-    bintray {
-        user = bintray_user
-        key = bintray_key
-        publications = ['mavenJava']
-        configurations = ['archives']
-        pkg {
-            repo = 'plast-lab'
-            name = 'mini-sarif'
-            desc = 'A Java library to serialize static analysis results in SARIF format.'
-            licenses = ['MIT']
-            labels = ['java']
-            vcsUrl = 'https://github.com/plast-lab/mini-sarif'
-            version {
-                name = project.version
-                released = new Date()
-                vcsTag = project.version
-            }
-        }
-    }
-}
