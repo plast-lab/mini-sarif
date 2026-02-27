@@ -14,6 +14,12 @@ import java.util.List;
  */
 public class SARIFWriter {
     /**
+     * Utility class; do not instantiate.
+     */
+    private SARIFWriter() {
+    }
+
+    /**
      * Write a SARIF object to a file.
      * @param sarif          the SARIF object to write
      * @param sarifOut       the target file

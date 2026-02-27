@@ -12,6 +12,12 @@ public class Run implements MapGen {
     private final String columnKind = "utf16CodeUnits";
     private final MapGen properties = new Props();
 
+    /**
+     * Create a new analysis run.
+     * @param results the emitted analysis results
+     * @param artifacts the artifacts participating in the analysis
+     * @param tool the tool metadata
+     */
     public Run(List<Result> results, List<Artifact> artifacts, Tool tool) {
         this.results = results;
         this.artifacts = artifacts;

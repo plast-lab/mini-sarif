@@ -8,6 +8,10 @@ import java.util.Map;
 public class SARIF implements MapGen {
     private final List<Run> runs;
 
+    /**
+     * Create a top-level SARIF payload.
+     * @param runs the analysis runs contained in this payload
+     */
     public SARIF(List<Run> runs) {
         this.runs = runs;
     }

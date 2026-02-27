@@ -4,9 +4,20 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A rule that may produce one or more analysis results.
+ */
 public class Rule implements MapGen {
     private final String id, name, shortDescription, fullDescription, level;
 
+    /**
+     * Create a new rule.
+     * @param id Rule ID, must be unique within the tool.
+     * @param name Rule name.
+     * @param shortDescription  A short description of the rule.
+     * @param fullDescription A full description of the rule.
+     * @param level The default level of the rule.
+     */
     public Rule(String id, String name, String shortDescription, String fullDescription, String level) {
         this.id = id;
         this.name = name;
@@ -15,6 +26,9 @@ public class Rule implements MapGen {
         this.level = level;
     }
 
+    /**
+     * Convert this rule to a map suitable for JSON serialization.
+     */
     @Override
     public Map<String, Object> toMap() {
         Map<String, Object> ret = new HashMap<>();

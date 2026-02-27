@@ -9,6 +9,10 @@ import java.util.Map;
 public class Artifact implements MapGen {
     private final ArtifactLocation location;
 
+    /**
+     * Create a new analysis artifact.
+     * @param location the location metadata of the artifact
+     */
     public Artifact(ArtifactLocation location) {
         this.location = location;
     }

@@ -9,6 +9,10 @@ import java.util.stream.Collectors;
  * map (and thus support easy JSON serialization).
  */
 public interface MapGen {
+    /**
+     * Convert this node to a map suitable for JSON serialization.
+     * @return a map representation of this node
+     */
     Map<String, Object> toMap();
 
     /**

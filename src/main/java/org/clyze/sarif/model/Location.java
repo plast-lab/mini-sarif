@@ -3,10 +3,21 @@ package org.clyze.sarif.model;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A result location in a source artifact.
+ */
 public class Location implements MapGen {
     private final ArtifactLocation artifactLocation;
     private final long startLine, startColumn, endLine, endColumn;
 
+    /**
+     * Create a new result location.
+     * @param artifactLocation the artifact where this location appears
+     * @param startLine the start line number
+     * @param startColumn the start column number
+     * @param endLine the end line number
+     * @param endColumn the end column number
+     */
     public Location(ArtifactLocation artifactLocation, long startLine, long startColumn, long endLine, long endColumn) {
         this.artifactLocation = artifactLocation;
         this.startLine = startLine;
