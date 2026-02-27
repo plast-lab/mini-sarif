@@ -26,6 +26,14 @@ java {
     withJavadocJar()
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 test {
     useJUnitPlatform()
     enableAssertions = true
