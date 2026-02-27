@@ -1,17 +1,12 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
-    id 'net.researchgate.release' version '2.6.0'
-    id 'com.jfrog.artifactory' version '4.24.21'
 }
 
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
-
-group 'org.clyze'
+group ='org.clyze'
 
 wrapper {
-    gradleVersion = '6.7'
+    gradleVersion = '9.3.1'
 }
 
 repositories {
@@ -20,10 +15,10 @@ repositories {
 }
 
 dependencies {
-    api 'com.fasterxml.jackson.core:jackson-databind:2.12.1'   // JSON generator
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    api 'com.fasterxml.jackson.core:jackson-databind:2.21.1'            // JSON generator
+    testImplementation platform('org.junit:junit-bom:5.12.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 java {
@@ -33,50 +28,5 @@ java {
 
 test {
     useJUnitPlatform()
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-}
-
-if (project.hasProperty('artifactory_user')) {
-    publishing {
-        repositories {
-            maven {
-                credentials {
-                    username artifactory_user
-                    password artifactory_password
-                }
-                //Always publish to the public releases repo
-                url "${artifactory_contextUrl}/libs-public-release-local"
-            }
-        }
-    }
-}
-
-release {
-    failOnSnapshotDependencies = false
-    git {
-        requireBranch = 'master'
-    }
-}
-afterReleaseBuild.dependsOn publish
-
-// To configure, set jfrog_user/jfrog_password in [~/.gradle,.]/gradle.properties.
-// Upload with: ./gradlew artifactoryPublish
-artifactoryPublish {
-    skip = false //Skip build info analysis and publishing (false by default)
-    contextUrl = 'http://clyze.jfrog.io/artifactory'
-    publications ('mavenJava')
-    properties = ['qa.level': 'basic']
-    clientConfig.publisher.repoKey = 'default-maven-local'
-    clientConfig.publisher.username = jfrog_user
-    clientConfig.publisher.password = jfrog_password
-
-    // Minimum file size in KB for which the plugin performs checksum deploy optimization. Default: 10. Set to 0 to disable uploading files with checksum that already exists in Artifactory.
-    clientConfig.publisher.minChecksumDeploySizeKb = 10
+    enableAssertions = true
 }
